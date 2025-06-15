@@ -74,6 +74,14 @@ Copy the template settings file `cp variables-private.tf.tpl variables-private.t
 - enter the `git_url` value that points to your repository
 - don't enter `git_token`, as we want this value to be secret (don't save it on your hard drive).
 
+**Note:** The following Flux-related variables have default values in `variables.tf` and usually don't need to be changed:
+- `flux_registry` (defaults to "ghcr.io")
+- `flux_version` (defaults to "v2.4.0") 
+- `git_path` (defaults to "./flux")
+- `git_ref` (defaults to "main")
+
+You can override these in your `variables-private.tf` file if needed.
+
 Now, go to [github.com profile page](https://github.com/settings/profile) and generate a fine-grained private access token (PAT) with `repo` scope (Read and Write access to code). Here are [more details](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens). Copy the token and paste it into the `variables-private.tf` file as the `git_token` value.
 
 Export the PAT as environment variable
@@ -96,6 +104,23 @@ export KUBECONFIG=$PWD/.kube.config
 kubectl version
 kubectl get nodes
 ```
+
+#### 3.2. Troubleshooting Common Issues
+
+If you encounter errors during `tofu apply`, here are common solutions:
+
+**"variable not declared" errors for flux_registry, flux_version, git_path, git_ref:**
+- These variables are now defined in `variables.tf` with default values
+- Make sure you're using the latest version of this repository
+
+**".kube.config file not found" errors:**
+- The `.kube.config` file is created by the `local_file.kube_config` resource
+- Make sure to run `tofu apply -target local_file.kube_config` first
+- The file should appear in your `tf/` directory after successful apply
+
+**"local_file resource not found" errors:**
+- This resource is defined in `cluster.tf` and should be present
+- Run `tofu init` to ensure all providers are downloaded
 
 ### 4. Bootstrapping the GitOps setup
 

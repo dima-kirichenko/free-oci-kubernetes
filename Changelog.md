@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Fix: add missing Terraform variables for Flux configuration (flux_registry, flux_version, git_path, git_ref)
+- Fix: update installation documentation with troubleshooting section
+- Improvement: add optional Flux variable overrides to private template
+
 ## 0.6.0 (2025.06.09)
 
 - chg: set wordpress deployment's rollingStrategy to recreate to avoid volume blocking on upgrades

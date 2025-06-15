@@ -33,3 +33,27 @@ variable "enable_wireguard" {
   description = "Weather or not create wireguard security group allow rules."
   default     = true
 }
+
+variable "flux_registry" {
+  type        = string
+  description = "Flux registry URL"
+  default     = "ghcr.io"
+}
+
+variable "flux_version" {
+  type        = string
+  description = "Flux version"
+  default     = "v2.4.0"
+}
+
+variable "git_path" {
+  type        = string
+  description = "Path in the Git repository to sync"
+  default     = "./flux"
+}
+
+variable "git_ref" {
+  type        = string
+  description = "Git reference (branch, tag, or commit) to sync"
+  default     = "main"
+}
